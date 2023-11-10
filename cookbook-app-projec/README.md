@@ -1,24 +1,6 @@
 # cookbook-app-projec
 
-## Project setup
-```
-npm install
-```
+**git仓库绑定的是"仿豆果APP"文件夹,而不是内部小文件夹**
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+1. 先拉后推
+2. 更新完一定要上传
