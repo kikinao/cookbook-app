@@ -4,14 +4,47 @@ import HomeView from '../views/HomeView.vue'
 import FavoriteView from '../views/FavoriteView.vue'
 import UserView from '../views/UserView.vue'
 import RegisterView from '../views/RegisterView.vue'
+import RecommendView from '../views/HomeChildren/RecommendView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
+    redirect: '/home',
+  },
+  {
+    path: '/home',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    redirect: '/home/recommend',
+    children: [
+      {
+        path: 'recommend',
+        name: 'recommend',
+        component: RecommendView
+      },
+      {
+        path: 'note',
+        name: 'note',
+        component: () => import('../views/HomeChildren/NoteView.vue')
+      },
+      {
+        path: 'video',
+        name: 'video',
+        component: () => import('../views/HomeChildren/VideoView.vue')
+      },
+      {
+        path: 'activity',
+        name: 'activity',
+        component: () => import('../views/HomeChildren/ActivityView.vue')
+      },
+      {
+        path: 'attention',
+        name: 'attention',
+        component: () => import('../views/HomeChildren/AttentionView.vue')
+      },
+    ]
   },
   {
     path: '/favorite',

@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <div class="tab-bar">
-      <router-link tag="span" to="/">
+      <router-link tag="span" :to="{ name: 'home' }" >
         <van-icon name="wap-home-o" size="25px" color="gray" />
         首页
       </router-link>
 
-      <router-link tag="span" to="/favorite">
+      <router-link tag="span" :to="{ name: 'favorite' }">
         <van-icon name="star-o" size="25px" color="gray" />
         收藏
       </router-link>
 
-      <router-link tag="span" to="/user">
+      <router-link tag="span" :to="{ name: 'user' }">
         <van-icon name="contact-o" size="25px" color="gray" />
         我的
       </router-link>
@@ -34,13 +34,15 @@ export default {
   padding: 0px 20px;
   text-align: center;
   line-height: 55px;
+  background-color: white;
   border-top: 1px solid gainsboro;
+  z-index: 999;
 
   display: flex;
   justify-content: space-between;
 
   position: fixed;
-  bottom: 0px;
+  bottom: -2px;
   left: 0px;
   right: 0px;
 
@@ -60,7 +62,7 @@ export default {
   }
 }
 
-span.router-exact-active {
+span.router-active {
   & .van-icon {
     &::after {
       content: "";
