@@ -1,4 +1,4 @@
-import { Icon, Search, Tab, Tabs, Swipe, SwipeItem, Image as VanImage } from 'vant';
+import { Icon, Search, Tab, Tabs, Swipe, SwipeItem, Image as VanImage, NavBar } from 'vant';
 
 export default {
     install(Vue) {
@@ -9,5 +9,6 @@ export default {
         Vue.use(Swipe);
         Vue.use(SwipeItem);
         Vue.use(VanImage);
+        Vue.use(NavBar);
     }
 }

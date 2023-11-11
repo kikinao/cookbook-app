@@ -61,6 +61,18 @@ const routes = [
     name: 'register',
     component: RegisterView
   },
+  {
+    path: '/cookmenu',
+    name: 'cookmenu',
+    component: () => import('../views/CookMenuView.vue'),
+    children: [
+      {
+        path: 'menulist',
+        name: 'menulist',
+        component: () => import('../views/CookMenuChildren/MenuListView.vue')
+      }
+    ]
+  },
 ]
 
 const router = new VueRouter({

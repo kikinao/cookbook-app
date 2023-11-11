@@ -3,7 +3,7 @@
     <div class="home">
       <van-search v-model="value" show-action placeholder="腌萝卜">
         <template #action>
-          <van-icon name="list-switch" size="24px" />
+          <van-icon name="list-switch" size="24px" @click="jump" />
         </template>
       </van-search>
       <div class="nav-bar">
@@ -27,6 +27,11 @@ export default {
     return {
       value: "",
     };
+  },
+  methods: {
+    jump() {
+      this.$router.push({ name: "menulist" });
+    },
   },
   components: {},
 };
