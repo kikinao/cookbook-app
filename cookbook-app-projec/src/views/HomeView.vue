@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     jump() {
-      this.$router.push({ name: "menulist" });
+      this.$router.push({ name: "cookmenu" });
     },
   },
   components: {},

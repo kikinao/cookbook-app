@@ -67,7 +67,8 @@ const routes = [
     component: () => import('../views/CookMenuView.vue'),
     children: [
       {
-        path: 'menulist',
+        props: true,
+        path: 'menulist/id=:id',
         name: 'menulist',
         component: () => import('../views/CookMenuChildren/MenuListView.vue')
       }
