@@ -43,7 +43,11 @@
     <!-- 搜索推荐页 -->
     <div class="search-recommend" v-show="showResult">
       <ul>
-        <li v-for="(e, i) in searchResultList" :key="i">
+        <li
+          v-for="(e, i) in searchResultList"
+          :key="i"
+          @click="gotoResult(e.name)"
+        >
           <p>{{ e.name }}</p>
           <span v-if="e.tag" :class="clasName(e.tag.name)">{{
             e.tag.name
@@ -54,7 +58,7 @@
 
     <!-- 点击后的搜索结果页面 -->
     <div class="search-result" v-show="isShow">
-      <div>我是点击后搜索结果页面</div>
+      <SearchResultComponent :keyword="value" />
     </div>
   </div>
 </template>
@@ -62,6 +66,7 @@
 <script>
 import { getHotResult, getSearchKeyword } from "../apis/search-data";
 import _ from "lodash";
+import SearchResultComponent from "../components/SearchResultComponent.vue";
 const curClasName = [
   { name: "热门", claName: "red" },
   { name: "经典", claName: "green" },
@@ -69,6 +74,7 @@ const curClasName = [
 ];
 
 export default {
+  components: { SearchResultComponent },
   data() {
     return {
       value: "",
@@ -99,10 +105,6 @@ export default {
       this.localStorageList.push(n);
       localStorage.historyList = JSON.stringify(this.localStorageList);
       this.value = "";
-
-      //   if (kw) {
-      //     console.log(kw);
-      //   }
     },
     clean() {
       this.localStorageList = [];
@@ -111,11 +113,15 @@ export default {
     async getSearhResult(kw) {
       let data = await getSearchKeyword(kw);
       this.searchResultList = data.suggests;
-      console.log(data.suggests);
     },
     clasName(tag) {
       let n = curClasName.find((e) => e.name == tag);
       return n.claName;
+    },
+    gotoResult(kw) {
+      this.isShow = true;
+      this.value = kw;
+      console.log(kw);
     },
   },
   mounted() {
@@ -129,7 +135,7 @@ export default {
   },
   computed: {
     showResult() {
-      return this.value && !this.isShow;
+      return Boolean(this.value) && !this.isShow;
     },
     showDefault() {
       return !this.showResult && !this.isShow;
@@ -139,6 +145,10 @@ export default {
     async value(kw) {
       if (this.value) {
         this.mydebounce(kw);
+      }
+
+      if (this.value.length == 0) {
+        this.isShow = false;
       }
     },
   },
