@@ -65,10 +65,11 @@ const routes = [
     path: '/cookmenu',
     name: 'cookmenu',
     component: () => import('../views/CookMenuView.vue'),
+    redirect: '/cookmenu/menulist/1',
     children: [
       {
         props: true,
-        path: 'menulist/id=:id',
+        path: 'menulist/:id',
         name: 'menulist',
         component: () => import('../views/CookMenuChildren/MenuListView.vue')
       }

@@ -1,6 +1,10 @@
 <template>
   <div class="menuList">
-    <van-nav-bar title="菜谱分类" left-arrow @click-left="$router.go(-1)">
+    <van-nav-bar
+      title="菜谱分类"
+      left-arrow
+      @click-left="$router.push({ name: 'recommend' })"
+    >
       <template #right>
         <van-icon name="search" size="18" color="black" />
       </template>
@@ -30,25 +34,29 @@
 
 <script>
 import { getMenuData } from "../apis/cookMenu-data";
-
 export default {
   data() {
     return {
       activeKey: 0,
       menuList: [],
+      menuBS: null,
     };
   },
   methods: {
     clickHandle(index) {
       this.activeKey = index;
     },
+    async getMenuList() {
+      let { cs } = await getMenuData();
+      this.menuList = cs;
+    },
   },
-  async mounted() {
-    let { cs } = await getMenuData();
-    this.menuList = cs;
+  mounted() {
+    this.getMenuList();
   },
 };
 </script>
+
 
 <style lang="scss" scoped>
 .menuList {
