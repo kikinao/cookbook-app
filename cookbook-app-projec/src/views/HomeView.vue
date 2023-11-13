@@ -1,7 +1,12 @@
 <template>
   <div>
     <div class="home">
-      <van-search v-model="value" show-action placeholder="腌萝卜">
+      <van-search
+        v-model="value"
+        show-action
+        placeholder="腌萝卜"
+        @focus="$router.push({ name: 'search' })"
+      >
         <template #action>
           <van-icon name="list-switch" size="24px" @click="jump" />
         </template>
@@ -55,6 +60,7 @@ export default {
   height: 50px;
   font-size: 13px;
   padding: 15px;
+  margin-top: -1px;
   background-color: white;
   display: flex;
 

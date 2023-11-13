@@ -6,7 +6,12 @@
       @click-left="$router.push({ name: 'recommend' })"
     >
       <template #right>
-        <van-icon name="search" size="18" color="black" />
+        <van-icon
+          name="search"
+          size="18"
+          color="black"
+          @click="$router.replace({ name: 'search' })"
+        />
       </template>
     </van-nav-bar>
     <div class="menu-main">
