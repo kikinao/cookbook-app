@@ -5,6 +5,8 @@ import FavoriteView from '../views/FavoriteView.vue'
 import UserView from '../views/UserView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import RecommendView from '../views/HomeChildren/RecommendView.vue'
+import SearchView from '../views/SearchView.vue'
+import SearchResult from '../views/SearchChildren/SearchResult.vue'
 
 Vue.use(VueRouter)
 
@@ -78,7 +80,24 @@ const routes = [
   {
     path: '/search',
     name: 'search',
-    component: () => import('../views/SearchView.vue')
+    component: SearchView,
+    children: [
+      {
+        props: true,
+        path: 'searchresult:kw',
+        name: 'searchresult',
+        component: SearchResult,
+        redirect: '/search/searchresult:kw/resultshow0',
+        children: [
+          {
+            props: true,
+            path: 'resultshow:order',
+            name: 'resultshow',
+            component: () => import('../views/SearchChildren/ResultShowView.vue')
+          }
+        ]
+      }
+    ]
   },
 ]
 

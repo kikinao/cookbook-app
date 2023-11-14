@@ -42,9 +42,7 @@ export default {
             bottom: false,
           },
         });
-        console.log("实例化BS");
       } else {
-        console.log("111");
         this.menuBS.refresh();
       }
     },
@@ -63,8 +61,7 @@ export default {
     this.menuBS?.destroy();
   },
   watch: {
-    list(cur) {
-      console.log(cur);
+    list() {
       this.$nextTick(() => this.initialBScroll());
     },
   },

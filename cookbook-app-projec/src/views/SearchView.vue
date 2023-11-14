@@ -1,16 +1,18 @@
 <template>
   <div class="search-box">
     <van-search
+      class="my-search"
       v-model.trim="value"
       show-action
       placeholder="腌萝卜"
       :clearable="false"
+      @focus="isShow = false"
     >
       <template #left>
-        <van-icon name="arrow-left" class="myLeft" @click="$router.go(-1)" />
+        <van-icon name="arrow-left" class="myLeft" @click="leftClick" />
       </template>
       <template #action>
-        <div @click="pushlocalStorage">搜索</div>
+        <div @click="gotoResult(value)">搜索</div>
       </template>
     </van-search>
 
@@ -26,6 +28,7 @@
             v-show="localStorageList != `[]`"
             v-for="(e, index) in localStorageList"
             :key="index"
+            @click="gotoResult(e.name)"
           >
             {{ e.name }}
           </span>
@@ -35,7 +38,12 @@
       <div class="search-about-item">
         <p>热门搜索</p>
         <div class="item-list">
-          <span v-for="e in hotList" :key="e.name">{{ e.name }}</span>
+          <span
+            v-for="e in hotList"
+            :key="e.name"
+            @click="gotoResult(e.name)"
+            >{{ e.name }}</span
+          >
         </div>
       </div>
     </div>
@@ -58,7 +66,7 @@
 
     <!-- 点击后的搜索结果页面 -->
     <div class="search-result" v-show="isShow">
-      <SearchResultComponent :keyword="value" />
+      <router-view />
     </div>
   </div>
 </template>
@@ -66,7 +74,6 @@
 <script>
 import { getHotResult, getSearchKeyword } from "../apis/search-data";
 import _ from "lodash";
-import SearchResultComponent from "../components/SearchResultComponent.vue";
 const curClasName = [
   { name: "热门", claName: "red" },
   { name: "经典", claName: "green" },
@@ -74,14 +81,14 @@ const curClasName = [
 ];
 
 export default {
-  components: { SearchResultComponent },
   data() {
     return {
-      value: "",
       hotList: [],
       localStorageList: [],
       isShow: false,
       searchResultList: [],
+      // 真正传值的是curKW
+      curKW: "",
     };
   },
   methods: {
@@ -90,21 +97,6 @@ export default {
     },
     getlocalStorage() {
       this.localStorageList = JSON.parse(localStorage.historyList || `[]`);
-    },
-    pushlocalStorage() {
-      let n = {
-        name: this.value,
-        id: new Date().getTime(),
-      };
-
-      // 手动修改this.localStorageList为[]
-      if (this.localStorageList == `[]`) {
-        this.localStorageList = [];
-      }
-
-      this.localStorageList.push(n);
-      localStorage.historyList = JSON.stringify(this.localStorageList);
-      this.value = "";
     },
     clean() {
       this.localStorageList = [];
@@ -119,9 +111,33 @@ export default {
       return n.claName;
     },
     gotoResult(kw) {
+      if (!kw) return;
       this.isShow = true;
       this.value = kw;
-      console.log(kw);
+      this.curKW = kw;
+      this.$router.push({
+        name: "searchresult",
+        params: { kw: this.curKW },
+      });
+
+      let n = {
+        name: this.value,
+      };
+
+      // 手动修改this.localStorageList为[]
+      if (this.localStorageList == `[]`) {
+        this.localStorageList = [];
+      }
+
+      // 查找是否搜索过该内容
+      let i = this.localStorageList.findIndex((e) => e.name == n.name);
+      if (i != -1) return;
+      this.localStorageList.push(n);
+      localStorage.historyList = JSON.stringify(this.localStorageList);
+    },
+    leftClick() {
+      this.$router.go(-1);
+      this.value = "";
     },
   },
   mounted() {
@@ -139,6 +155,15 @@ export default {
     },
     showDefault() {
       return !this.showResult && !this.isShow;
+    },
+    // 通过vuex来修改值
+    value: {
+      get() {
+        return this.$store.state.keyWord;
+      },
+      set(val) {
+        this.$store.commit("setKeyWord", val);
+      },
     },
   },
   watch: {
@@ -160,6 +185,11 @@ export default {
 
 
 <style lang="scss" scoped>
+.my-search {
+  position: relative;
+  z-index: 999;
+}
+
 .search-box {
   position: fixed;
   top: 0;

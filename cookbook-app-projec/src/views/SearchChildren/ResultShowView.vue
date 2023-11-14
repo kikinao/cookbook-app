@@ -1,30 +1,29 @@
 <template>
-  <div class="wrapper" ref="wrapper">
-    <div class="countent">
-      我是搜索结果{{ curKW }}{{ order }}
-      <!-- <div class="item" v-for="e in cookList" :key="e.r.id">
-        <van-image width="130" height="90" :src="e.r.img" radius="5" />
-        <div class="item-about">
-          <p class="cook-name">{{ e.r.n }}</p>
-          <p class="details">{{ e.r.recommendation_tag }}</p>
-          <div class="author">
-            <van-image width="20" height="20" :round="true" :src="e.r.a.p" />
-            <p>{{ e.r.a.n }}</p>
+  <div class="show-box">
+    <div class="wrapper" ref="wrapper">
+      <div class="countent">
+        <div class="item" v-for="e in cookList" :key="e.r.id">
+          <van-image width="130" height="90" :src="e.r.img" radius="5" />
+          <div class="item-about">
+            <p class="cook-name">{{ e.r.n }}</p>
+            <p class="details">{{ e.r.recommendation_tag }}</p>
+            <div class="author">
+              <van-image width="20" height="20" :round="true" :src="e.r.a.p" />
+              <p>{{ e.r.a.n }}</p>
+            </div>
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
 
-
 <script>
-import { getSearchResult } from "../apis/search-data";
-// import { mapState } from "vuex";
+import { getSearchResult } from "../../apis/search-data";
 import BScroll from "@better-scroll/core";
 
 export default {
-  props: ["curKW", "order"],
+  props: ["kw", "order"],
   data() {
     return {
       cookList: [],
@@ -33,8 +32,9 @@ export default {
   },
   methods: {
     async getCookList() {
-      console.log("发送请求");
-      let { list } = await getSearchResult(this.curKW, this.order);
+      this.cookList = [];
+      let { list } = await getSearchResult(this.kw, this.order);
+      console.log(list[0].r.id);
       this.cookList = list;
     },
     initialBS() {
@@ -45,25 +45,25 @@ export default {
       }
     },
   },
-  // computed: {
-  //   ...mapState(["keyWord"]),
-  // },
-  // mounted() {
-  //   this.curKW = this.keyWord;
-  // },
   watch: {
-    curKW(cur) {
-      console.log("curKW发生改变:", cur);
-      this.getCookList();
-    },
     cookList() {
       this.$nextTick(() => {
         this.initialBS();
       });
     },
   },
+  mounted() {
+    console.log("我是mounted:", this.$route.params);
+    this.getCookList();
+  },
   beforeDestroy() {
     this.curBS?.destroy();
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log(to.params);
+    this.getCookList();
+
+    next();
   },
 };
 </script>
