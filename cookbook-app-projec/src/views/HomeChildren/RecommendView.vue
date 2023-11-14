@@ -16,6 +16,7 @@
       :cookName="e.r.n"
       :id="e.r.id"
       :Lv="e.r.a.lvl"
+      :vipImg="e.r.a.verified_image"
     />
   </div>
 </template>

@@ -46,7 +46,7 @@
 
       <div class="search-about-item">
         <p>热门搜索</p>
-        <div class="item-list">
+        <div class="item-list hot-list">
           <span
             v-for="e in hotList"
             :key="e.name"
@@ -245,6 +245,7 @@ export default {
       min-width: 40px;
       height: 25px;
       line-height: 25px;
+      border-radius: 5px;
       padding: 0 10px;
       margin-right: 4px;
       margin-top: 10px;
@@ -302,6 +303,14 @@ export default {
         border-color: orange;
       }
     }
+  }
+}
+
+.hot-list {
+  span:nth-child(-n + 2) {
+    background-color: white;
+    border: 1px solid rgb(232, 26, 26);
+    color: rgb(232, 26, 26);
   }
 }
 </style>

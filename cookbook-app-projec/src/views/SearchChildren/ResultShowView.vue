@@ -83,12 +83,17 @@ export default {
   }
 }
 
+.countent {
+  padding-top: 15px;
+}
+
 .item {
+  height: 110px;
   font-size: 14px;
-  margin-top: 15px;
   display: flex;
 
   .item-about {
+    height: 90px;
     margin-left: 10px;
     display: flex;
     flex-flow: column nowrap;

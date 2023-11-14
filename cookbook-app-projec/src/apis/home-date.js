@@ -5,3 +5,9 @@ export const getRecommendData = async () => {
 
     return data.result;
 }
+
+export const getVideoData = async () => {
+    let { data } = await axios.get(`https://apis.netstart.cn/douguo/home/videos/0/20`);
+
+    return data.result;
+}

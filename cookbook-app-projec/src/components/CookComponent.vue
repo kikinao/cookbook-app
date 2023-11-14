@@ -3,13 +3,39 @@
     <div class="cook-user">
       <div class="cook-user-name">
         <van-image width="30" height="30" :round="true" :src="authorimg" />
+        <van-image
+          v-if="vipImg"
+          class="vip-img"
+          width="13"
+          height="13"
+          :src="vipImg"
+        />
         <p>{{ authorName }}</p>
         <span>LV.{{ Lv }}</span>
       </div>
       <div class="another">...</div>
     </div>
     <div class="cook-image">
-      <van-image width="100%" height="100%" :src="cookImg" />
+      <van-image v-if="cookImg" width="100%" height="100%" :src="cookImg" />
+      <video
+        ref="startVideo"
+        v-if="videoSrc"
+        :muted="true"
+        width="100%"
+        height="100%"
+        :src="videoSrc"
+        :loop="true"
+        :poster="videoImg"
+        @click="playVideo"
+      ></video>
+      <van-icon
+        ref="playIco"
+        class="play-ico"
+        v-if="videoSrc"
+        name="play-circle-o"
+        size="60"
+        color="white"
+      />
     </div>
     <div class="cook-introduce">
       <div class="cook-collect-count">
@@ -37,14 +63,37 @@
 export default {
   props: [
     "id",
+    "videoSrc",
+    "videoImg",
     "authorName",
     "Lv",
+    "vipImg",
     "authorimg",
     "cookImg",
     "collectUsers",
     "collectCount",
     "cookName",
   ],
+  data() {
+    return {
+      isAutoPlay: false,
+      playIco: false,
+    };
+  },
+  methods: {
+    clickHandle() {
+      this.isAutoPlay = true;
+    },
+    playVideo() {
+      if (this.$refs.startVideo.paused) {
+        this.$refs.startVideo.play();
+        this.$refs.playIco.style.display = "none";
+      } else {
+        this.$refs.startVideo.pause();
+        this.$refs.playIco.style.display = "block";
+      }
+    },
+  },
 };
 </script>
 
@@ -65,6 +114,13 @@ export default {
     display: flex;
     align-items: center;
     font-size: 12px;
+    position: relative;
+
+    .vip-img {
+      position: absolute;
+      left: 23px;
+      bottom: 0px;
+    }
 
     p {
       margin-left: 8px;
@@ -101,6 +157,19 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 10px;
+  }
+}
+
+.cook-image {
+  position: relative;
+
+  .play-ico {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -30px;
+    margin-left: -30px;
+    z-index: 10;
   }
 }
 </style>
