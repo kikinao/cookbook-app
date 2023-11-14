@@ -3,7 +3,13 @@
     <div class="wrapper" ref="wrapper">
       <div class="countent">
         <div class="item" v-for="e in cookList" :key="e.r.id">
-          <van-image width="130" height="90" :src="e.r.img" radius="5" />
+          <van-image
+            class="myImg"
+            width="130"
+            height="90"
+            :src="e.r.img"
+            radius="5"
+          />
           <div class="item-about">
             <p class="cook-name">{{ e.r.n }}</p>
             <p class="details">{{ e.r.recommendation_tag }}</p>
@@ -34,8 +40,7 @@ export default {
     async getCookList() {
       this.cookList = [];
       let { list } = await getSearchResult(this.kw, this.order);
-      console.log(list[0].r.id);
-      this.cookList = list;
+      this.cookList = list.filter((e) => e.type == 13);
     },
     initialBS() {
       if (!this.curBS) {
@@ -70,8 +75,12 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
-  height: calc(100vh - 54px);
+  height: calc(100vh - 96px);
   background-color: white;
+
+  .myImg {
+    aspect-ratio: 1.4;
+  }
 }
 
 .item {
@@ -105,6 +114,8 @@ export default {
 
 .cook-name {
   width: 200px;
+  height: 20px;
+  line-height: 20px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

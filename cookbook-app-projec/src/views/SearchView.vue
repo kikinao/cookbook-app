@@ -6,8 +6,17 @@
       show-action
       placeholder="腌萝卜"
       :clearable="false"
-      @focus="isShow = false"
+      @focus="focusHandle"
     >
+      <template #right-icon>
+        <van-icon
+          name="clear"
+          color="#ccc"
+          @click="value = ''"
+          v-show="cleanShow"
+        />
+      </template>
+
       <template #left>
         <van-icon name="arrow-left" class="myLeft" @click="leftClick" />
       </template>
@@ -84,8 +93,8 @@ export default {
   data() {
     return {
       hotList: [],
-      localStorageList: [],
-      isShow: false,
+      // localStorageList: [],
+      cleanShow: false,
       searchResultList: [],
       // 真正传值的是curKW
       curKW: "",
@@ -120,24 +129,15 @@ export default {
         params: { kw: this.curKW },
       });
 
-      let n = {
-        name: this.value,
-      };
-
-      // 手动修改this.localStorageList为[]
-      if (this.localStorageList == `[]`) {
-        this.localStorageList = [];
-      }
-
-      // 查找是否搜索过该内容
-      let i = this.localStorageList.findIndex((e) => e.name == n.name);
-      if (i != -1) return;
-      this.localStorageList.push(n);
-      localStorage.historyList = JSON.stringify(this.localStorageList);
+      this.$store.commit("pushLocalStorageList", { name: kw });
     },
     leftClick() {
       this.$router.go(-1);
       this.value = "";
+    },
+    focusHandle() {
+      this.isShow = false;
+      this.cleanShow = true;
     },
   },
   mounted() {
@@ -165,6 +165,22 @@ export default {
         this.$store.commit("setKeyWord", val);
       },
     },
+    isShow: {
+      get() {
+        return this.$store.state.isShow;
+      },
+      set(bool) {
+        this.$store.commit("setIsShow", bool);
+      },
+    },
+    localStorageList: {
+      get() {
+        return this.$store.state.localStorageList;
+      },
+      set(arr) {
+        this.$store.commit("setLocalStorageList", arr);
+      },
+    },
   },
   watch: {
     async value(kw) {
@@ -174,6 +190,7 @@ export default {
 
       if (this.value.length == 0) {
         this.isShow = false;
+        this.cleanShow = false;
       }
     },
   },

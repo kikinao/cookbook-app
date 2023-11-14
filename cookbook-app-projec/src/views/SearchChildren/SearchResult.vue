@@ -37,10 +37,14 @@ export default {
 
 <style lang="scss" scoped>
 .choose-bar {
+  height: 42px;
+  margin-top: -1px;
   font-size: 14px;
   padding: 5px 0px;
   border-bottom: 1px solid rgba(220, 220, 220, 0.3);
   background-color: white;
+  position: relative;
+  z-index: 210;
   display: flex;
 
   div {

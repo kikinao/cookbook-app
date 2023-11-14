@@ -10,7 +10,9 @@
           :src="e.image_url"
         />
         <div class="cooksBox">
-          <span v-for="c in e.cs" :key="c.id">{{ c.name }}</span>
+          <span v-for="c in e.cs" :key="c.id" @click="gotoResult(c.name)">{{
+            c.name
+          }}</span>
         </div>
       </div>
     </div>
@@ -20,6 +22,7 @@
 <script>
 import { getMenuData } from "../../apis/cookMenu-data";
 import BScroll from "@better-scroll/core";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   props: ["id"],
@@ -30,6 +33,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["setKeyWord", "setIsShow"]),
     async getData() {
       let { cs } = await getMenuData();
       this.list = cs.find((e) => e.id == this.id).cs;
@@ -46,6 +50,17 @@ export default {
         this.menuBS.refresh();
       }
     },
+    gotoResult(kw) {
+      console.log(kw);
+      this.setKeyWord(kw);
+      this.$router.replace({ name: "searchresult", params: { kw: kw } });
+      this.setIsShow(true);
+
+      this.$store.commit("pushLocalStorageList", { name: kw });
+    },
+  },
+  computed: {
+    ...mapState(["keyWord", "isShow"]),
   },
   mounted() {
     this.getData();
