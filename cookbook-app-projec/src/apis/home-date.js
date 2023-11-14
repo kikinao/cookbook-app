@@ -11,3 +11,9 @@ export const getVideoData = async () => {
 
     return data.result;
 }
+
+export const getNoteData = async () => {
+    let { data } = await axios.get(`https://apis.netstart.cn/douguo/home/notes/0/20`);
+
+    return data.result;
+}
