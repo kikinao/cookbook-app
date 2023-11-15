@@ -36,7 +36,7 @@ export default {
   line-height: 55px;
   background-color: white;
   border-top: 1px solid gainsboro;
-  z-index: 100;
+  z-index: 200;
 
   display: flex;
   justify-content: space-between;

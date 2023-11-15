@@ -17,3 +17,9 @@ export const getNoteData = async () => {
 
     return data.result;
 }
+
+export const getAttentionData = async () => {
+    let { data } = await axios.get(`https://apis.netstart.cn/douguo/home/ffeeds/0/20`);
+
+    return data;
+}
