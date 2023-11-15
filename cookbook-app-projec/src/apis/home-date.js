@@ -23,3 +23,9 @@ export const getAttentionData = async () => {
 
     return data.result;
 }
+
+export const getActivityData = async () => {
+    let { data } = await axios.get(`https://apis.netstart.cn/douguo/home/events/getlists?offset=0limit=20`);
+
+    return data.data;
+}
