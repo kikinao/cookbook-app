@@ -21,5 +21,5 @@ export const getNoteData = async () => {
 export const getAttentionData = async () => {
     let { data } = await axios.get(`https://apis.netstart.cn/douguo/home/ffeeds/0/20`);
 
-    return data;
+    return data.result;
 }

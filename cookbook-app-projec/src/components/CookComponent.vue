@@ -10,10 +10,20 @@
           height="13"
           :src="vipImg"
         />
-        <p>{{ authorName }}</p>
-        <span>LV.{{ Lv }}</span>
+        <div>
+          <div class="author-vip">
+            <p>{{ authorName }}</p>
+            <span>LV.{{ Lv }}</span>
+          </div>
+          <p class="fans" v-if="followersCount">
+            {{ followersCount }} · {{ recipesCount }}
+          </p>
+        </div>
       </div>
-      <div class="another">...</div>
+      <div class="another">
+        <p v-if="!followersCount">...</p>
+        <span v-if="followersCount" class="attention">关注</span>
+      </div>
     </div>
     <div class="cook-image">
       <van-image v-if="cookImg" width="100%" height="100%" :src="cookImg" />
@@ -43,7 +53,7 @@
           <van-image
             width="18"
             height="18"
-            v-for="(u, i) in collectUsers"
+            v-for="(u, i) in curCollectUsers"
             :round="true"
             :key="i"
             :src="u.p"
@@ -73,6 +83,8 @@ export default {
     "collectUsers",
     "collectCount",
     "cookName",
+    "followersCount",
+    "recipesCount",
   ],
   data() {
     return {
@@ -92,6 +104,15 @@ export default {
         this.$refs.startVideo.pause();
         this.$refs.playIco.style.display = "block";
       }
+    },
+  },
+  computed: {
+    curCollectUsers() {
+      let res = [];
+      if (this.collectUsers) {
+        res = this.collectUsers.filter((e) => e != null);
+      }
+      return res;
     },
   },
 };
@@ -116,6 +137,24 @@ export default {
     font-size: 12px;
     position: relative;
 
+    .fans {
+      font-size: 12px;
+      margin-top: 8px;
+      margin-left: 4px;
+      transform: scale(0.9);
+      color: #b1b1b1;
+    }
+
+    .author-vip {
+      display: flex;
+
+      span {
+        transform: scale(0.7);
+        color: goldenrod;
+        margin-left: 3px;
+      }
+    }
+
     .vip-img {
       position: absolute;
       left: 23px;
@@ -124,11 +163,6 @@ export default {
 
     p {
       margin-left: 8px;
-    }
-
-    span {
-      transform: scale(0.7);
-      color: goldenrod;
     }
   }
 
@@ -171,5 +205,12 @@ export default {
     margin-left: -30px;
     z-index: 10;
   }
+}
+
+.attention {
+  font-size: 12px;
+  padding: 6px 18px;
+  background-color: #ffca2f;
+  border-radius: 999px;
 }
 </style>

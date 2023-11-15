@@ -10,9 +10,9 @@
       :key="e.r.id"
       :authorimg="e.r.a.p"
       :authorName="e.r.a.n"
-      :collectCount="e.r['collect_count_text']"
-      :collectUsers="e.r['collect_users']"
-      :cookImg="e.r.p"
+      :collectCount="e.r.collect_count_text"
+      :collectUsers="e.r.collect_users"
+      :cookImg="e.r.img"
       :cookName="e.r.n"
       :id="e.r.id"
       :Lv="e.r.a.lvl"
@@ -34,13 +34,8 @@ export default {
   },
   methods: {
     async getCookList() {
-      let data = await getRecommendData();
-      for (let i = 0; i < data.list.length; i++) {
-        const ele = data.list[i];
-        if (ele.type == 1) {
-          this.cookList.push(ele);
-        }
-      }
+      let { list } = await getRecommendData();
+      this.cookList = await list.filter((e) => e.type == 1);
     },
     async getBannerList() {
       let data = await getRecommendData();
