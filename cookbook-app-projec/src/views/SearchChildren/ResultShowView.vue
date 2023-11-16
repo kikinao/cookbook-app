@@ -5,6 +5,7 @@
         <favorite-and-search-component
           v-for="e in cookList"
           :key="e.r.id"
+          :id="e.r.id"
           :authorImg="e.r.a.p"
           :authorName="e.r.a.n"
           :cookName="e.r.n"

@@ -1,10 +1,13 @@
 <template>
   <div>
-    <div class="item">
+    <div class="item" :data-id="id">
       <van-image class="myImg" width="130" height="90" :src="img" radius="5" />
       <div class="item-about">
         <p class="cook-name">{{ cookName }}</p>
-        <p class="details">{{ recommendationTag }}</p>
+        <p class="details">
+          <span v-if="recommendationTag">{{ recommendationTag }}</span>
+          <span v-if="viewsCount">{{ viewsCount }}人看过</span>
+        </p>
         <div class="author">
           <van-image width="20" height="20" :round="true" :src="authorImg" />
           <p>{{ authorName }}</p>
@@ -16,7 +19,15 @@
 
 <script>
 export default {
-  props: ["img", "cookName", "recommendationTag", "authorImg", "authorName"],
+  props: [
+    "id",
+    "img",
+    "cookName",
+    "recommendationTag",
+    "viewsCount",
+    "authorImg",
+    "authorName",
+  ],
 };
 </script>
 

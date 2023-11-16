@@ -9,6 +9,7 @@ export default new Vuex.Store({
         keyWord: '',
         isShow: false,
         localStorageList: [],
+        localStorageFavoriteList: [],
     },
     //里面定义方法，操作state方发
     mutations: {
@@ -37,6 +38,39 @@ export default new Vuex.Store({
             state.localStorageList.push(n);
             localStorage.historyList = JSON.stringify(state.localStorageList);
         },
+        // 设置收藏列表
+        setLocalStorageFavoriteList(state, payload) {
+            state.localStorageFavoriteList = payload;
+        },
+        removeLocalStorageFavoriteList(state, payload) {
+            let c = {
+                name: payload.name,
+                id: payload.id,
+            }
+
+            if (state.localStorageFavoriteList == `[]`) {
+                state.localStorageFavoriteList = [];
+            }
+
+            let arr = state.localStorageFavoriteList.filter(e => e.id != c.id);
+            state.localStorageFavoriteList = arr;
+            localStorage.favoriteList = JSON.stringify(state.localStorageFavoriteList);
+        },
+        pushLocalStorageFavoriteList(state, payload) {
+            let c = {
+                name: payload.name,
+                id: payload.id,
+            }
+
+            if (state.localStorageFavoriteList == `[]`) {
+                state.localStorageFavoriteList = [];
+            }
+
+            let i = state.localStorageFavoriteList.findIndex(e => e.id == c.id);
+            if (i != -1) return;
+            state.localStorageFavoriteList.push(c);
+            localStorage.favoriteList = JSON.stringify(state.localStorageFavoriteList);
+        }
     },
     // 操作异步操作mutation
     actions: {

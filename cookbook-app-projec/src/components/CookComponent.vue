@@ -61,7 +61,12 @@
           <span>{{ collectCount }}</span>
         </div>
         <div class="cook-collect">
-          <van-icon name="star-o" size="18" />
+          <van-icon
+            :name="star"
+            :color="starColor"
+            size="18"
+            @click="collectCook(id, cookName)"
+          />
         </div>
       </div>
       <p>{{ cookName }}</p>
@@ -90,6 +95,8 @@ export default {
     return {
       isAutoPlay: false,
       playIco: false,
+      star: "star-o",
+      starColor: "black",
     };
   },
   methods: {
@@ -103,6 +110,28 @@ export default {
       } else {
         this.$refs.startVideo.pause();
         this.$refs.playIco.style.display = "block";
+      }
+    },
+    collectCook(curId, curName) {
+      console.log(curId, curName);
+      if (this.star == "star-o") {
+        this.star = "star";
+        this.starColor = "#ffcb2f";
+
+        //存入收藏中
+        this.$store.commit("pushLocalStorageFavoriteList", {
+          name: curName,
+          id: curId,
+        });
+      } else {
+        this.star = "star-o";
+        this.starColor = "black";
+
+        //删除收藏中
+        this.$store.commit("removeLocalStorageFavoriteList", {
+          name: curName,
+          id: curId,
+        });
       }
     },
   },
