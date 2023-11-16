@@ -110,3 +110,21 @@ const router = new VueRouter({
 })
 
 export default router
+
+router.beforeEach((to, from, next) => {
+  const { name } = to;
+
+  if (name == 'favorite' || name == 'user') {
+    let token = localStorage.token;
+
+    if (token) {
+      next();
+    } else {
+      next({ name: 'register', params: to })
+    }
+
+  } else {
+    next();
+  }
+
+})

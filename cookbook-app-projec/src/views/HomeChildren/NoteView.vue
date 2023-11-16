@@ -7,31 +7,38 @@
         </div>
       </div>
     </div>
-    <div class="notes-box" v-masonry transition-duration="0s">
-      <div v-masonry-tile v-for="e in noteList" :key="e.id">
-        <div class="item">
-          <van-image width="185" height="60%" :src="e.note.image_u" />
-          <div class="introduce">
-            <p class="name">{{ e.note.title }}</p>
-            <div class="bottom-about">
-              <div class="author-about">
-                <van-image
-                  width="20"
-                  height="20"
-                  :round="true"
-                  :src="e.note.author.p"
-                />
-                <p class="author-name">{{ e.note.author.n }}</p>
-              </div>
-              <div class="like-about">
-                <van-icon name="like-o" />
-                <p class="likes">{{ e.note.like_count }}</p>
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多菜谱了，刷新一下吧~"
+      @load="onload"
+    >
+      <div class="notes-box" v-masonry transition-duration="0s">
+        <div v-masonry-tile v-for="e in curNoteList" :key="e.id">
+          <div class="item">
+            <van-image width="185" height="60%" :src="e.note.image_u" />
+            <div class="introduce">
+              <p class="name">{{ e.note.title }}</p>
+              <div class="bottom-about">
+                <div class="author-about">
+                  <van-image
+                    width="20"
+                    height="20"
+                    :round="true"
+                    :src="e.note.author.p"
+                  />
+                  <p class="author-name">{{ e.note.author.n }}</p>
+                </div>
+                <div class="like-about">
+                  <van-icon name="like-o" />
+                  <p class="likes">{{ e.note.like_count }}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </van-list>
   </div>
 </template>
 
@@ -45,13 +52,19 @@ export default {
       noteList: [],
       activeList: [],
       noteBS: null,
+      curType: 0,
+      loading: false,
+      finished: false,
     };
   },
   methods: {
-    async getNoteData() {
-      let { list, topics } = await getNoteData();
-      this.noteList = list;
+    async getTitleData() {
+      let { topics } = await getNoteData();
       this.activeList = topics;
+    },
+    async getNoteData(type) {
+      let { list } = await getNoteData(type);
+      this.noteList.push(...list);
     },
     initialBScroll() {
       if (!this.noteBS) {
@@ -64,6 +77,24 @@ export default {
         this.noteBS.refresh();
       }
     },
+    onload() {
+      console.log("开始刷新请求", `curType:${this.curType}`);
+      this.curType++;
+      this.getNoteData(this.curType * 20);
+      this.loading = false;
+      if (this.curType >= 3) {
+        this.finished = true;
+      }
+    },
+  },
+  computed: {
+    curNoteList() {
+      let res = [];
+      if (this.noteList) {
+        res = this.noteList.filter((e) => e.note != undefined);
+      }
+      return res;
+    },
   },
   watch: {
     activeList() {
@@ -72,6 +103,7 @@ export default {
   },
   mounted() {
     this.getNoteData();
+    this.getTitleData();
   },
   beforeDestroy() {
     this.noteBS?.destroy();
@@ -87,7 +119,7 @@ export default {
   position: relative;
 
   .active-content {
-    width: 230%;
+    width: 220%;
   }
 }
 
@@ -111,10 +143,6 @@ export default {
       }
     }
   }
-}
-
-.notes-box {
-  margin-bottom: 55px;
 }
 
 .item {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="attention-box">
     <div class="attention-recommend">
       <p>豆果美食,会做饭很酷~</p>
       <div class="attentions">
@@ -8,19 +8,26 @@
       </div>
     </div>
     <div class="recommend-box">
-      <cook-component
-        v-for="(e, i) in atList"
-        :key="i"
-        :authorimg="e.u.p"
-        :authorName="e.u.n"
-        :collectCount="e.collect_count_text"
-        :cookImg="e.img"
-        :cookName="e.n"
-        :followersCount="e.u.followers_count_text"
-        :id="e.u.id"
-        :Lv="e.u.lv"
-        :recipesCount="e.u.recipes_count_text"
-      />
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多菜谱了，刷新一下吧~"
+        @load="onload"
+      >
+        <cook-component
+          v-for="(e, i) in atList"
+          :key="i"
+          :authorimg="e.u.p"
+          :authorName="e.u.n"
+          :collectCount="e.collect_count_text"
+          :cookImg="e.img"
+          :cookName="e.n"
+          :followersCount="e.u.followers_count_text"
+          :id="e.u.id"
+          :Lv="e.u.lv"
+          :recipesCount="e.u.recipes_count_text"
+        />
+      </van-list>
     </div>
   </div>
 </template>
@@ -34,21 +41,34 @@ export default {
   data() {
     return {
       atList: [],
+      curType: 0,
+      loading: false,
+      finished: false,
     };
   },
   methods: {
-    async getData() {
-      let { rfs } = await getAttentionData();
-      this.atList = rfs;
+    async getData(type) {
+      let { rfs } = await getAttentionData(type);
+      this.atList.push(...rfs);
     },
-  },
-  mounted() {
-    this.getData();
+    onload() {
+      console.log("开始刷新请求", `curType:${this.curType}`);
+      this.curType++;
+      this.getData(this.curType * 20);
+      this.loading = false;
+      if (this.curType >= 5) {
+        this.finished = true;
+      }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.attention-box {
+  margin-bottom: 55px;
+}
+
 .attention-recommend {
   height: 80px;
   margin-bottom: 15px;

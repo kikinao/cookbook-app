@@ -1,25 +1,25 @@
 import axios from "axios";
 
-export const getRecommendData = async () => {
-    let { data } = await axios.get('https://apis.netstart.cn/douguo/home/recommended/0/10');
+export const getRecommendData = async (type = 0) => {
+    let { data } = await axios.get(`https://apis.netstart.cn/douguo/home/recommended/${type}/10`);
 
     return data.result;
 }
 
-export const getVideoData = async () => {
-    let { data } = await axios.get(`https://apis.netstart.cn/douguo/home/videos/0/20`);
+export const getVideoData = async (type = 0) => {
+    let { data } = await axios.get(`https://apis.netstart.cn/douguo/home/videos/${type}/20`);
 
     return data.result;
 }
 
-export const getNoteData = async () => {
-    let { data } = await axios.get(`https://apis.netstart.cn/douguo/home/notes/0/20`);
+export const getNoteData = async (type = 0) => {
+    let { data } = await axios.get(`https://apis.netstart.cn/douguo/home/notes/${type}/20`);
 
     return data.result;
 }
 
-export const getAttentionData = async () => {
-    let { data } = await axios.get(`https://apis.netstart.cn/douguo/home/ffeeds/0/20`);
+export const getAttentionData = async (type = 0) => {
+    let { data } = await axios.get(`https://apis.netstart.cn/douguo/home/ffeeds/${type}/20`);
 
     return data.result;
 }
