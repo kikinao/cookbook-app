@@ -46,7 +46,7 @@ export default {
       this.cookList.push(...arr);
     },
     onload() {
-      console.log("开始刷新请求", `curType:${this.curType}`);
+      // console.log("开始刷新请求", `curType:${this.curType}`);
       this.curType++;
       this.getCookList(this.curType * 20);
       this.loading = false;

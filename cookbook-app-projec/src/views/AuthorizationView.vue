@@ -6,7 +6,7 @@
     </div>
     <div class="content">
       <div class="options">
-        <div class="login">手机号登录</div>
+        <div class="login" @click="gotoLogin">手机号登录</div>
       </div>
       <div class="author-login">
         <p>其他登录方式</p>
@@ -25,6 +25,9 @@
         </van-checkbox>
       </div>
     </div>
+    <div>
+      <router-view @changeBackName="changeBackName" />
+    </div>
   </div>
 </template>
 
@@ -33,7 +36,26 @@ export default {
   data() {
     return {
       checked: false,
+      fromName: null,
     };
+  },
+  methods: {
+    gotoLogin() {
+      this.$router.push({ name: "login" });
+    },
+    changeBackName() {
+      this.$router.replace({
+        name: this.fromName,
+      });
+    },
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log(to.params.name);
+    // console.log(from);
+
+    next((vm) => {
+      vm.fromName = to.params.name || "home";
+    });
   },
 };
 </script>
@@ -89,6 +111,7 @@ export default {
 
 .chooseInp {
   font-size: 12px;
+  margin-top: 10px;
   .blue {
     color: #50969f;
   }

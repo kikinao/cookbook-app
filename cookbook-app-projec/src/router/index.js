@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import FavoriteView from '../views/FavoriteView.vue'
 import UserView from '../views/UserView.vue'
-import RegisterView from '../views/RegisterView.vue'
+import AuthorizationView from '../views/AuthorizationView.vue'
 import RecommendView from '../views/HomeChildren/RecommendView.vue'
 import SearchView from '../views/SearchView.vue'
 import SearchResult from '../views/SearchChildren/SearchResult.vue'
@@ -59,9 +59,22 @@ const routes = [
     component: UserView
   },
   {
-    path: '/register',
-    name: 'register',
-    component: RegisterView
+    path: '/authorization',
+    name: 'authorization',
+    component: AuthorizationView,
+    // redirect: '/authorization/login',
+    children: [
+      {
+        path: 'login',
+        name: 'login',
+        component: () => import('../views/AuthorizationChildren/LoginView.vue')
+      },
+      {
+        path: 'register',
+        name: 'register',
+        component: () => import('../views/AuthorizationChildren/RegisterView.vue')
+      }
+    ]
   },
   {
     path: '/cookmenu',
@@ -120,7 +133,7 @@ router.beforeEach((to, from, next) => {
     if (token) {
       next();
     } else {
-      next({ name: 'register', params: to })
+      next({ name: 'authorization', params: to })
     }
 
   } else {

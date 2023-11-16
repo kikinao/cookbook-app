@@ -78,7 +78,7 @@ export default {
       }
     },
     onload() {
-      console.log("开始刷新请求", `curType:${this.curType}`);
+      // console.log("开始刷新请求", `curType:${this.curType}`);
       this.curType++;
       this.getNoteData(this.curType * 20);
       this.loading = false;
