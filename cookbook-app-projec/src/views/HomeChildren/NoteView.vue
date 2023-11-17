@@ -119,12 +119,12 @@ export default {
   position: relative;
 
   .active-content {
-    width: 230%;
+    width: 227%;
   }
 }
 
 .notes-box {
-  padding-left: 10px;
+  padding-left: 15px;
   margin-right: 0px;
 }
 
@@ -190,7 +190,7 @@ export default {
   }
 
   .name {
-    width: 192px;
+    width: 172px;
     height: 20px;
     line-height: 20px;
     white-space: nowrap;
