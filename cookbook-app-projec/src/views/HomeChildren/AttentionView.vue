@@ -72,6 +72,7 @@ export default {
 .attention-recommend {
   height: 80px;
   margin-bottom: 15px;
+  padding: 0 10px;
   background-color: #fafafa;
 
   display: flex;

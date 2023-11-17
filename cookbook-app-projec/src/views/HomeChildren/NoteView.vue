@@ -16,7 +16,7 @@
       <div class="notes-box" v-masonry transition-duration="0s">
         <div v-masonry-tile v-for="e in curNoteList" :key="e.id">
           <div class="item">
-            <van-image width="185" height="60%" :src="e.note.image_u" />
+            <van-image width="175" height="60%" :src="e.note.image_u" />
             <div class="introduce">
               <p class="name">{{ e.note.title }}</p>
               <div class="bottom-about">
@@ -119,8 +119,13 @@ export default {
   position: relative;
 
   .active-content {
-    width: 220%;
+    width: 230%;
   }
+}
+
+.notes-box {
+  padding-left: 10px;
+  margin-right: 0px;
 }
 
 .theActives {
@@ -147,7 +152,7 @@ export default {
 
 .item {
   font-size: 14px;
-  width: 192px;
+  width: 182px;
   padding: 10px 0;
   background-color: white;
 }
@@ -165,7 +170,7 @@ export default {
 }
 
 .bottom-about {
-  width: 185px;
+  width: 175px;
   display: flex;
   justify-content: space-between;
 }

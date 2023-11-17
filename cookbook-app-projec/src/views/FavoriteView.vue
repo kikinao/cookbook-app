@@ -13,10 +13,10 @@
       </div>
       <div class="chooseFavorite">
         <p @click="gotoSetFavorite">管理</p>
-        <!-- <div class="search">
+        <div class="search">
           <van-icon name="search" size="14" />
           <p>搜索</p>
-        </div> -->
+        </div>
       </div>
     </div>
     <div class="favorite-box">
@@ -54,6 +54,7 @@ export default {
       this.list.push(recipe);
     },
     getId() {
+      this.list = [];
       this.localStorageFavoriteList = JSON.parse(
         localStorage.favoriteList || `[]`
       );
@@ -78,16 +79,11 @@ export default {
     },
   },
   mounted() {
-    this.$nextTick(() => {
-      this.list = [];
-    });
+    this.getId();
   },
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      vm.list = [];
-      console.log(vm.list);
-      vm.getId();
-    });
+  beforeRouteUpdate(to, from, next) {
+    this.getId();
+    next();
   },
 };
 </script>
