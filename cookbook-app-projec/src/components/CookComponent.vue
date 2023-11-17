@@ -97,6 +97,8 @@ export default {
       playIco: false,
       star: "star-o",
       starColor: "black",
+      localList: [],
+      idArr: [],
     };
   },
   methods: {
@@ -134,6 +136,13 @@ export default {
         });
       }
     },
+    getId() {
+      this.localList = JSON.parse(localStorage.favoriteList || `[]`);
+      const arr = Array.from(this.localList);
+      for (const value of arr) {
+        this.idArr.push(value.id);
+      }
+    },
   },
   computed: {
     curCollectUsers() {
@@ -143,6 +152,16 @@ export default {
       }
       return res;
     },
+  },
+  mounted() {
+    this.getId();
+    this.localList = JSON.parse(localStorage.favoriteList || `[]`);
+    this.idArr.map((e) => {
+      if (e == this.id) {
+        this.star = "star";
+        this.starColor = "#ffcb2f";
+      }
+    });
   },
 };
 </script>

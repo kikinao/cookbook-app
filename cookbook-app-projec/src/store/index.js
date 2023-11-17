@@ -43,6 +43,8 @@ export default new Vuex.Store({
             state.localStorageFavoriteList = payload;
         },
         removeLocalStorageFavoriteList(state, payload) {
+            state.localStorageFavoriteList = JSON.parse(localStorage.favoriteList || `[]`);
+
             let c = {
                 name: payload.name,
                 id: payload.id,
@@ -57,6 +59,8 @@ export default new Vuex.Store({
             localStorage.favoriteList = JSON.stringify(state.localStorageFavoriteList);
         },
         pushLocalStorageFavoriteList(state, payload) {
+            state.localStorageFavoriteList = JSON.parse(localStorage.favoriteList || `[]`);
+
             let c = {
                 name: payload.name,
                 id: payload.id,

@@ -51,7 +51,14 @@ const routes = [
   {
     path: '/favorite',
     name: 'favorite',
-    component: FavoriteView
+    component: FavoriteView,
+    children: [
+      {
+        path: 'setfavorite',
+        name: 'setfavorite',
+        component: () => import('../views/FavoriteChildren/SetFavoriteView.vue')
+      }
+    ]
   },
   {
     path: '/user',
