@@ -7,6 +7,7 @@ export default new Vuex.Store({
     //数据，相当于data
     state: {
         keyWord: '',
+        cookID: '',
         isShow: false,
         localStorageList: [],
         localStorageFavoriteList: [],
@@ -74,6 +75,10 @@ export default new Vuex.Store({
             if (i != -1) return;
             state.localStorageFavoriteList.push(c);
             localStorage.favoriteList = JSON.stringify(state.localStorageFavoriteList);
+        },
+        // 设置菜谱D
+        setCookId(state, id) {
+            state.cookID = id;
         }
     },
     // 操作异步操作mutation

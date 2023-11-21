@@ -20,7 +20,9 @@
       </div>
     </div>
     <div class="view-show">
-      <router-view />
+      <keep-alive>
+        <router-view />
+      </keep-alive>
     </div>
   </div>
 </template>

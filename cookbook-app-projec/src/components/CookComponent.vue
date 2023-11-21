@@ -26,7 +26,13 @@
       </div>
     </div>
     <div class="cook-image">
-      <van-image v-if="cookImg" width="100%" height="100%" :src="cookImg" />
+      <van-image
+        v-if="cookImg"
+        width="100%"
+        height="100%"
+        :src="cookImg"
+        @click="gotoCookDetails(id)"
+      />
       <video
         ref="startVideo"
         v-if="videoSrc"
@@ -142,6 +148,10 @@ export default {
       for (const value of arr) {
         this.idArr.push(value.id);
       }
+    },
+    gotoCookDetails(curId) {
+      this.$router.push({ name: "cookdetails" });
+      this.$store.commit("setCookId", curId);
     },
   },
   computed: {

@@ -7,6 +7,7 @@ import AuthorizationView from '../views/AuthorizationView.vue'
 import RecommendView from '../views/HomeChildren/RecommendView.vue'
 import SearchView from '../views/SearchView.vue'
 import SearchResult from '../views/SearchChildren/SearchResult.vue'
+import CookDetailsView from '../views/CookDetailsView.vue'
 
 Vue.use(VueRouter)
 
@@ -119,6 +120,11 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/cookdetails',
+    name: 'cookdetails',
+    component: CookDetailsView,
+  }
 ]
 
 const router = new VueRouter({
