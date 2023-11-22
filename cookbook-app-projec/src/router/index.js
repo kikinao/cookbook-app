@@ -124,7 +124,7 @@ const routes = [
     path: '/cookdetails',
     name: 'cookdetails',
     component: CookDetailsView,
-  }
+  },
 ]
 
 const router = new VueRouter({

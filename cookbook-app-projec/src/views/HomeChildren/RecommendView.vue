@@ -56,7 +56,12 @@ export default {
       // console.log("开始刷新请求", `curType:${this.curType}`);
       this.curType++;
       this.getCookList(this.curType * 10);
-      this.loading = false;
+
+      // 等页面渲染完毕再设定为上拉加载完毕
+      this.$nextTick(() => {
+        this.loading = false;
+      });
+      
       if (this.curType >= 5) {
         this.finished = true;
       }
