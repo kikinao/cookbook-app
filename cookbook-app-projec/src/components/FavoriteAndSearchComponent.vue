@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="item" :data-id="id">
+    <div class="item" :data-id="id" @click="gotoCookDetails(id)">
       <van-image class="myImg" width="130" height="90" :src="img" radius="5" />
       <div class="item-about">
         <p class="cook-name">{{ cookName }}</p>
@@ -28,6 +28,12 @@ export default {
     "authorImg",
     "authorName",
   ],
+  methods: {
+    gotoCookDetails(curId) {
+      this.$router.push({ name: "cookdetails", params: { id: curId } });
+      this.$store.commit("setCookId", curId);
+    },
+  },
 };
 </script>
 

@@ -150,7 +150,7 @@ export default {
       }
     },
     gotoCookDetails(curId) {
-      this.$router.push({ name: "cookdetails" });
+      this.$router.push({ name: "cookdetails", params: { id: curId } });
       this.$store.commit("setCookId", curId);
     },
   },

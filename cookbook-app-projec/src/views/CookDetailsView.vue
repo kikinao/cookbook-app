@@ -186,6 +186,7 @@ import BScroll from "@better-scroll/core";
 import * as echarts from "echarts";
 
 export default {
+  props: ["id"],
   data() {
     return {
       value: "",
@@ -204,8 +205,9 @@ export default {
   methods: {
     async getData() {
       console.log("cookID:", this.cookID);
+      console.log("cookID:", this.id);
       // 3242430 3269261
-      let { recipe } = await getCookDetailsData(this.cookID || 3242430);
+      let { recipe } = await getCookDetailsData(this.id);
       this.curCook = recipe;
       recipe.nutrition_facts.map((e) => {
         // 获取颜色

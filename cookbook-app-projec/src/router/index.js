@@ -121,7 +121,8 @@ const routes = [
     ]
   },
   {
-    path: '/cookdetails',
+    path: '/cookdetails:id',
+    props: true,
     name: 'cookdetails',
     component: CookDetailsView,
   },

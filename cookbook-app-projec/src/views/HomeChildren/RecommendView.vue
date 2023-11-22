@@ -50,7 +50,7 @@ export default {
     async getFirst() {
       let { list } = await getRecommendData();
       let arr = await list.filter((e) => e.type == 1);
-      console.log(arr);
+      // console.log(arr);
       this.cookList = arr;
     },
     async getCookList(type) {
@@ -66,7 +66,7 @@ export default {
       this.bannerList = data.banner;
     },
     onload() {
-      console.log("开始刷新请求", `curType:${this.curType}`);
+      // console.log("开始刷新请求", `curType:${this.curType}`);
       this.curType++;
       this.getCookList(this.curType * 10);
 

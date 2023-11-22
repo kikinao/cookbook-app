@@ -39,7 +39,9 @@ export default {
     },
     initialBS() {
       if (!this.curBS) {
-        this.curBS = new BScroll(this.$refs.wrapper);
+        this.curBS = new BScroll(this.$refs.wrapper, {
+          click: true,
+        });
       } else {
         this.curBS.refresh();
       }
@@ -71,6 +73,7 @@ export default {
 <style lang="scss" scoped>
 .wrapper {
   height: calc(100vh - 96px);
+  padding: 0 10px;
   background-color: white;
 
   .myImg {

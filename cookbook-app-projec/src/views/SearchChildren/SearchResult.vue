@@ -40,7 +40,7 @@ export default {
   height: 42px;
   margin-top: -1px;
   font-size: 14px;
-  padding: 5px 0px;
+  padding: 5px 10px;
   border-bottom: 1px solid rgba(220, 220, 220, 0.3);
   background-color: white;
   position: relative;
