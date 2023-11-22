@@ -67,7 +67,14 @@ export default {
         // 寻找用户名是否存在,如果存在注册失败
         let index = userList.findIndex((e) => e.userName == this.name);
 
-        if (index != -1) return alert("当前用户名已存在");
+        if (index != -1) {
+          this.$dialog({
+            message: "当前用户名已存在!",
+            confirmButtonColor: "#f0c14c",
+            theme: "round-button",
+          });
+          return;
+        }
 
         userList.push({
           userName: this.name,
@@ -81,16 +88,37 @@ export default {
           name: "login",
         });
       } else if (this.name && this.paw && !this.checked) {
-        alert("请勾选《用户协议》和《隐私政策》!");
+        this.$dialog({
+          message: "请勾选《用户协议》和《隐私政策》!",
+          confirmButtonColor: "#f0c14c",
+          theme: "round-button",
+        });
       } else {
-        alert("请完成填写后再注册!");
+        this.$dialog({
+          message: "请完成填写后再注册!",
+          confirmButtonColor: "#f0c14c",
+          theme: "round-button",
+        });
       }
     },
   },
   beforeRouteLeave(to, from, next) {
-    if ((this.name || this.paw) && !this.checked) {
-      let res = confirm("确认取消注册吗?");
-      next(res);
+    if (this.name || this.paw) {
+      console.log(111);
+      this.$dialog({
+        message: "确认取消注册吗?",
+        confirmButtonColor: "#f0c14c",
+        theme: "round-button",
+        showCancelButton: true,
+      })
+        .then((res) => {
+          console.log(res);
+          next();
+        })
+        .catch((err) => {
+          console.log(err);
+          next(false);
+        });
     } else {
       next();
     }

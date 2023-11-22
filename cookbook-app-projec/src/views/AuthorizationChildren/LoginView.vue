@@ -71,7 +71,14 @@ export default {
 
         let curU = userList.find((e) => e.userName == this.name);
 
-        if (!curU) return alert("当前用户名不存在");
+        if (!curU) {
+          this.$dialog({
+            message: "当前用户名不存在!",
+            confirmButtonColor: "#f0c14c",
+            theme: "round-button",
+          });
+          return;
+        }
 
         if (curU.userPassword != this.paw) return alert(`您的密码错误`);
 
@@ -80,7 +87,11 @@ export default {
         // 接受方法修改跳转页面
         this.$emit("changeBackName");
       } else if (this.name && this.paw && !this.checked) {
-        alert("请勾选《用户协议》和《隐私政策》!");
+        this.$dialog({
+          message: "请勾选《用户协议》和《隐私政策》!",
+          confirmButtonColor: "#f0c14c",
+          theme: "round-button",
+        });
       }
     },
   },

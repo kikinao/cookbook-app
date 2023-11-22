@@ -162,8 +162,19 @@
               {{ curCook.release_time }}
             </div>
           </div>
+
+          <!-- 小贴士 -->
+          <div class="tips" v-if="curCook.tips">
+            <p class="tips-title">小贴士</p>
+            <p>
+              {{ curCook.tips }}
+            </p>
+          </div>
+
+          <!-- 评论区 -->
         </div>
       </div>
+      <!-- myTop的底部 -->
     </div>
 
     <!-- 分成5个小模块融成一个大页面 -->
@@ -195,8 +206,6 @@ export default {
       colors: [],
       proportion: [],
       theBS: null,
-      cookFoods: null,
-      cookNutrition: null,
     };
   },
   computed: {
@@ -591,5 +600,17 @@ export default {
 
 .myImg {
   aspect-ratio: 1;
+}
+
+.tips {
+  margin-top: 20px;
+  P {
+    font-size: 13px;
+  }
+
+  .tips-title {
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
 }
 </style>

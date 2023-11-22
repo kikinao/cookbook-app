@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="tab-bar">
-      <router-link tag="span" :to="{ name: 'home' }" >
+      <router-link tag="span" :to="{ name: 'home' }">
         <van-icon name="wap-home-o" size="25px" color="gray" />
         首页
       </router-link>
