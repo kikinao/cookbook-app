@@ -5,27 +5,29 @@
         <van-image width="100%" height="100%" :src="e.i" />
       </van-swipe-item>
     </van-swipe>
-    <!-- <van-list
+    <van-list
       v-model="loading"
       :finished="finished"
       finished-text="没有更多菜谱了，刷新一下吧~"
       @load="onload"
-    > -->
-    <!-- class="myContent" -->
-    <cook-component
-      v-for="e in cookList"
-      :key="e.r.id"
-      :authorimg="e.r.a.p"
-      :authorName="e.r.a.n"
-      :collectCount="e.r.collect_count_text"
-      :collectUsers="e.r.collect_users"
-      :cookImg="e.r.img"
-      :cookName="e.r.n"
-      :id="e.r.id"
-      :Lv="e.r.a.lvl"
-      :vipImg="e.r.a.verified_image"
-    />
-    <!-- </van-list> -->
+      :offset="50"
+      :immediate-check="false"
+    >
+      <!-- class="myContent" -->
+      <cook-component
+        v-for="e in cookList"
+        :key="e.r.id"
+        :authorimg="e.r.a.p"
+        :authorName="e.r.a.n"
+        :collectCount="e.r.collect_count_text"
+        :collectUsers="e.r.collect_users"
+        :cookImg="e.r.img"
+        :cookName="e.r.n"
+        :id="e.r.id"
+        :Lv="e.r.a.lvl"
+        :vipImg="e.r.a.verified_image"
+      />
+    </van-list>
   </div>
 </template>
 
@@ -36,6 +38,7 @@ import { getRecommendData } from "../../apis/home-date";
 export default {
   data() {
     return {
+      skeleton: true,
       bannerList: [],
       cookList: [],
       curType: 1,
@@ -54,6 +57,9 @@ export default {
       let { list } = await getRecommendData(type);
       let arr = await list.filter((e) => e.type == 1);
       this.cookList.push(...arr);
+      this.$nextTick(() => {
+        this.loading = false;
+      });
     },
     async getBannerList() {
       let data = await getRecommendData();
@@ -64,22 +70,18 @@ export default {
       this.curType++;
       this.getCookList(this.curType * 10);
 
-      // 等页面渲染完毕再设定为上拉加载完毕
-      this.$nextTick(() => {
-        this.loading = false;
-      });
-
-      if (this.curType >= 5) {
+      if (this.curType > 4) {
         this.finished = true;
       }
-      
     },
   },
   components: { CookComponent },
   mounted() {
     this.getBannerList();
-    this.getFirst();
     // this.getCookList();
+  },
+  created() {
+    this.getFirst();
   },
 };
 </script>

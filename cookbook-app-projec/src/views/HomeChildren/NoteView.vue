@@ -12,6 +12,7 @@
       :finished="finished"
       finished-text="没有更多菜谱了，刷新一下吧~"
       @load="onload"
+      :immediate-check="false"
     >
       <div class="notes-box" v-masonry transition-duration="0s">
         <div v-masonry-tile v-for="e in curNoteList" :key="e.id">
@@ -52,12 +53,16 @@ export default {
       noteList: [],
       activeList: [],
       noteBS: null,
-      curType: 0,
+      curType: 1,
       loading: false,
       finished: false,
     };
   },
   methods: {
+    async getFirst() {
+      let { list } = await getNoteData();
+      this.noteList = list;
+    },
     async getTitleData() {
       let { topics } = await getNoteData();
       this.activeList = topics;
@@ -65,6 +70,9 @@ export default {
     async getNoteData(type) {
       let { list } = await getNoteData(type);
       this.noteList.push(...list);
+      this.$nextTick(() => {
+        this.loading = false;
+      });
     },
     initialBScroll() {
       if (!this.noteBS) {
@@ -80,9 +88,9 @@ export default {
     onload() {
       // console.log("开始刷新请求", `curType:${this.curType}`);
       this.curType++;
-      this.getNoteData(this.curType * 20);
-      this.loading = false;
-      if (this.curType >= 3) {
+      this.getNoteData(this.curType * 10);
+
+      if (this.curType > 3) {
         this.finished = true;
       }
     },
@@ -100,6 +108,9 @@ export default {
     activeList() {
       this.$nextTick(() => this.initialBScroll());
     },
+  },
+  created() {
+    this.getFirst();
   },
   mounted() {
     this.getNoteData();

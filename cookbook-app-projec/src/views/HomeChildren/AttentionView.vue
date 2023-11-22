@@ -13,6 +13,7 @@
         :finished="finished"
         finished-text="没有更多菜谱了，刷新一下吧~"
         @load="onload"
+        :immediate-check="false"
       >
         <cook-component
           v-for="e in atList"
@@ -41,25 +42,36 @@ export default {
   data() {
     return {
       atList: [],
-      curType: 0,
+      curType: 1,
       loading: false,
       finished: false,
     };
   },
   methods: {
+    async getFirst() {
+      let { rfs } = await getAttentionData();
+      this.atList = rfs;
+      // console.log(this.atList);
+    },
     async getData(type) {
       let { rfs } = await getAttentionData(type);
       this.atList.push(...rfs);
+      this.$nextTick(() => {
+        this.loading = false;
+      });
     },
     onload() {
       // console.log("开始刷新请求", `curType:${this.curType}`);
       this.curType++;
-      this.getData(this.curType * 20);
-      this.loading = false;
-      if (this.curType >= 5) {
+      this.getData(this.curType * 10);
+
+      if (this.curType > 4) {
         this.finished = true;
       }
     },
+  },
+  created() {
+    this.getFirst();
   },
 };
 </script>
