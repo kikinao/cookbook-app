@@ -95,7 +95,7 @@
           <div
             ref="cook-nutrition"
             class="cook-nutrition"
-            v-if="curCook.nutrition_facts"
+            v-if="curCook.nutrition_facts.length != 0"
           >
             <div class="clickThings">
               <!-- <van-sticky :container="cookNutrition"> -->
@@ -152,7 +152,6 @@
                   class="myImg"
                   radius="15"
                   width="370"
-                  height="100%"
                   :src="e.image"
                 />
                 <p>{{ e.content }}</p>
@@ -586,5 +585,9 @@ export default {
   color: grey;
   transform: scale(0.8);
   margin-left: -40px;
+}
+
+.myImg {
+  aspect-ratio: 1;
 }
 </style>

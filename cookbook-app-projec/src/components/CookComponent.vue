@@ -75,7 +75,7 @@
           />
         </div>
       </div>
-      <p>{{ cookName }}</p>
+      <p @click="gotoCookDetails(id)">{{ cookName }}</p>
     </div>
   </div>
 </template>

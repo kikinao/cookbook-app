@@ -15,15 +15,15 @@
         @load="onload"
       >
         <cook-component
-          v-for="(e, i) in atList"
-          :key="i"
+          v-for="e in atList"
+          :key="e.share_info.object_id"
           :authorimg="e.u.p"
           :authorName="e.u.n"
           :collectCount="e.collect_count_text"
           :cookImg="e.img"
           :cookName="e.n"
           :followersCount="e.u.followers_count_text"
-          :id="e.u.id"
+          :id="e.share_info.object_id"
           :Lv="e.u.lv"
           :recipesCount="e.u.recipes_count_text"
         />
