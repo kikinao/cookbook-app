@@ -15,6 +15,11 @@
       </template>
     </van-nav-bar>
     <div class="menu-main">
+      <!-- 骨架屏 -->
+      <div class="skeleton" v-show="isSkeleton">
+        <div class="active"></div>
+      </div>
+
       <div class="chooseMenu">
         <div
           :class="['item', { active: activeKey == index }]"
@@ -45,6 +50,7 @@ export default {
       activeKey: 0,
       menuList: [],
       menuBS: null,
+      isSkeleton: true,
     };
   },
   methods: {
@@ -54,6 +60,7 @@ export default {
     async getMenuList() {
       let { cs } = await getMenuData();
       this.menuList = cs;
+      this.isSkeleton = false;
     },
   },
   mounted() {
@@ -64,6 +71,33 @@ export default {
 
 
 <style lang="scss" scoped>
+.skeleton {
+  width: 85px;
+  height: 100vh;
+  background-color: #f5f5f5;
+
+  .active {
+    width: 85px;
+    height: 40px;
+    background-color: white;
+    position: relative;
+
+    &::after {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      border-radius: 999px;
+      background-color: #ffc830;
+
+      position: absolute;
+      right: 0px;
+      top: 50%;
+      margin-top: -10px;
+    }
+  }
+}
+
 .menuList {
   position: fixed;
   top: 0px;

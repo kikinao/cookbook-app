@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="item" :data-id="id" @click="gotoCookDetails(id)">
-      <van-image class="myImg" width="130" height="90" :src="img" radius="5" />
-      <div class="item-about">
+    <div class="item" :data-id="id">
+      <van-image class="myImg" width="135" height="90" :src="img" radius="5" />
+      <div class="item-about" @click="gotoCookDetails(id)">
         <p class="cook-name">{{ cookName }}</p>
         <p class="details">
           <span v-if="recommendationTag">{{ recommendationTag }}</span>

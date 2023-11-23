@@ -68,7 +68,7 @@
 
 <script>
 import { getActivityData } from "../../apis/home-date";
-import ActivityComponent from "../../components/skeleton/ActivityComponent.vue";
+import ActivityComponent from "../../components/skeleton/ActivitySkeletonComponent.vue";
 
 export default {
   data() {

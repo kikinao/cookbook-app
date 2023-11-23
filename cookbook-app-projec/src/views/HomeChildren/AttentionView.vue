@@ -43,7 +43,7 @@
 <script>
 import { getAttentionData } from "../../apis/home-date";
 import CookComponent from "../../components/CookComponent.vue";
-import HomeAboutComponent from "../../components/skeleton/homeAboutComponent.vue";
+import HomeAboutComponent from "../../components/skeleton/homeSkeletonComponent.vue";
 
 export default {
   components: { CookComponent, HomeAboutComponent },

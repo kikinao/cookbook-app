@@ -1,5 +1,10 @@
 <template>
   <div class="wrapper" ref="wrapper">
+    <!-- 骨架屏 -->
+    <div class="skeleton" v-show="isSkeleton">
+      <cook-menu-skeleton-component v-for="e in skeletonList" :key="e" />
+    </div>
+
     <div class="allBox">
       <div class="item" v-for="e in list" :key="e.id">
         <van-image
@@ -23,11 +28,14 @@
 import { getMenuData } from "../../apis/cookMenu-data";
 import BScroll from "@better-scroll/core";
 import { mapState, mapMutations } from "vuex";
+import CookMenuSkeletonComponent from "../../components/skeleton/CookMenuSkeletonComponent.vue";
 
 export default {
   props: ["id"],
   data() {
     return {
+      skeletonList: [1, 2, 3, 4],
+      isSkeleton: true,
       list: [],
       menuBS: null,
     };
@@ -37,6 +45,7 @@ export default {
     async getData() {
       let { cs } = await getMenuData();
       this.list = cs.find((e) => e.id == this.id).cs;
+      this.isSkeleton = false;
     },
     initialBScroll() {
       if (!this.menuBS) {
@@ -66,6 +75,8 @@ export default {
     this.getData();
   },
   beforeRouteUpdate(to, from, next) {
+    this.isSkeleton = true;
+    this.list = [];
     this.$nextTick(() => {
       next();
       this.getData();
@@ -79,6 +90,9 @@ export default {
     list() {
       this.$nextTick(() => this.initialBScroll());
     },
+  },
+  components: {
+    CookMenuSkeletonComponent,
   },
 };
 </script>

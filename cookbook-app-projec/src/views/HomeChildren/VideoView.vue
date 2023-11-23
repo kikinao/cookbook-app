@@ -33,7 +33,7 @@
 <script>
 import CookComponent from "../../components/CookComponent.vue";
 import { getVideoData } from "../../apis/home-date";
-import HomeAboutComponent from "../../components/skeleton/homeAboutComponent.vue";
+import HomeAboutComponent from "../../components/skeleton/homeSkeletonComponent.vue";
 
 export default {
   data() {

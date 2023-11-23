@@ -1,5 +1,15 @@
 <template>
   <div>
+    <!-- 活动 骨架屏 -->
+    <div class="skeleton-active" v-show="isSkeletonActive">
+      <div class="skeleton-active-item">
+        <span v-for="e in skeletonList" :key="e"></span>
+      </div>
+      <div class="skeleton-active-item">
+        <span v-for="e in skeletonList" :key="e"></span>
+      </div>
+    </div>
+
     <div class="active-box wrapper" ref="wrapper">
       <div class="active-content">
         <div class="theActives" v-for="(e, i) in activeList" :key="i">
@@ -14,6 +24,26 @@
       @load="onload"
       :immediate-check="false"
     >
+      <!-- 瀑布流 骨架屏 -->
+      <div class="skeleton-body" v-show="isSkeletonBody">
+        <div class="skeleton-body-item" v-for="e in skeletonList" :key="e">
+          <div class="Img"></div>
+          <div class="foot">
+            <div class="name"></div>
+            <div class="author">
+              <div class="user">
+                <div class="pic"></div>
+                <div class="user-name"></div>
+              </div>
+              <div class="like">
+                <div class="ico"></div>
+                <div class="much"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="notes-box" v-masonry transition-duration="0s">
         <div v-masonry-tile v-for="e in curNoteList" :key="e.id">
           <div class="item">
@@ -50,8 +80,11 @@ import BScroll from "@better-scroll/core";
 export default {
   data() {
     return {
+      skeletonList: [1, 2, 3, 4],
       noteList: [],
       activeList: [],
+      isSkeletonActive: true,
+      isSkeletonBody: true,
       noteBS: null,
       curType: 1,
       loading: false,
@@ -62,10 +95,12 @@ export default {
     async getFirst() {
       let { list } = await getNoteData();
       this.noteList = list;
+      this.isSkeletonBody = false;
     },
     async getTitleData() {
       let { topics } = await getNoteData();
       this.activeList = topics;
+      this.isSkeletonActive = false;
     },
     async getNoteData(type) {
       let { list } = await getNoteData(type);
@@ -123,6 +158,98 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.skeleton-body {
+  width: 100vw;
+  margin-top: 10px;
+  padding: 0 10px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.skeleton-body-item {
+  margin-top: 10px;
+
+  .Img {
+    width: 175px;
+    height: 300px;
+    background-color: #f5f5f5;
+  }
+
+  .name {
+    margin-top: 10px;
+    width: 80px;
+    height: 16px;
+    background-color: #f5f5f5;
+  }
+
+  .author {
+    margin-top: 10px;
+    width: 175px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .user {
+    display: flex;
+
+    .pic {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background-color: #f5f5f5;
+    }
+
+    .user-name {
+      margin-left: 5px;
+      width: 50px;
+      height: 16px;
+      background-color: #f5f5f5;
+    }
+  }
+
+  .like {
+    display: flex;
+
+    .ico {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background-color: #f5f5f5;
+    }
+
+    .much {
+      margin-left: 5px;
+      width: 30px;
+      height: 16px;
+      background-color: #f5f5f5;
+    }
+  }
+}
+
+.skeleton-active {
+  width: 100vw;
+  overflow: hidden;
+
+  .skeleton-active-item {
+    white-space: nowrap;
+
+    span {
+      display: inline-block;
+      width: 126px;
+      height: 32px;
+      background-color: #f5f5f5;
+      border-radius: 999px;
+      margin-left: 10px;
+    }
+  }
+
+  .skeleton-active-item:last-child {
+    margin-top: 10px;
+  }
+}
+
 .active-box {
   width: 100vw;
   overflow: hidden;
@@ -142,21 +269,21 @@ export default {
 .theActives {
   span {
     display: inline-block;
-    margin-right: 10px;
+    margin-left: 10px;
     font-size: 12px;
     color: #50969f;
     background-color: #f3f9fa;
     border-radius: 999px;
     padding: 10px;
   }
+}
 
-  &:last-child {
-    span {
-      margin-top: 10px;
+.theActives:last-child {
+  span {
+    margin-top: 10px;
 
-      &:last-child {
-        border: 1px solid #50969f;
-      }
+    &:last-child {
+      border: 1px solid #50969f;
     }
   }
 }

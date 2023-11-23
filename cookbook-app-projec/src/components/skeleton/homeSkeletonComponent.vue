@@ -56,7 +56,7 @@ export default {
 .attention {
   font-size: 12px;
   padding: 6px 18px;
-  background-color: rgb(233, 233, 233);
+  background-color: #f5f5f5;
   border-radius: 999px;
   color: grey;
 }
@@ -74,14 +74,14 @@ export default {
     .headImg {
       width: 30px;
       height: 30px;
-      background-color: rgb(233, 233, 233);
+      background-color: #f5f5f5;
       border-radius: 999px;
     }
     .name {
       margin-left: 5px;
       width: 100px;
       height: 15px;
-      background-color: rgb(233, 233, 233);
+      background-color: #f5f5f5;
     }
   }
 
@@ -89,7 +89,7 @@ export default {
     margin-top: 10px;
     width: 370px;
     height: 280px;
-    background-color: rgb(233, 233, 233);
+    background-color: #f5f5f5;
   }
 }
 
@@ -110,7 +110,7 @@ export default {
     .peoples {
       width: 18px;
       height: 18px;
-      background-color: rgb(233, 233, 233);
+      background-color: #f5f5f5;
       border-radius: 999px;
     }
 
@@ -118,7 +118,7 @@ export default {
       margin-left: 5px;
       width: 80px;
       height: 13px;
-      background-color: rgb(233, 233, 233);
+      background-color: #f5f5f5;
     }
   }
 
@@ -126,14 +126,14 @@ export default {
     border-radius: 999px;
     width: 18px;
     height: 18px;
-    background-color: rgb(233, 233, 233);
+    background-color: #f5f5f5;
   }
 
   .bottom-foot {
     margin-top: 10px;
     width: 100%;
     height: 15px;
-    background-color: rgb(233, 233, 233);
+    background-color: #f5f5f5;
   }
 }
 </style>

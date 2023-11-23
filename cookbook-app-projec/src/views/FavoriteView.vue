@@ -8,7 +8,7 @@
         <van-icon name="star" color="#ffcb2f" size="30" />
         <div>
           <p class="wight">您收藏了</p>
-          <p>共{{ list.length }}篇菜谱</p>
+          <p>共{{ toLength }}篇菜谱</p>
         </div>
       </div>
       <div class="chooseFavorite">
@@ -19,6 +19,12 @@
         </div>
       </div>
     </div>
+
+    <!-- 骨架屏 -->
+    <div class="skeleton" v-show="isSkeleton">
+      <search-about-component v-for="(c, i) in skeletonList" :key="i" />
+    </div>
+
     <div class="favorite-box">
       <favorite-and-search-component
         v-for="e in list"
@@ -39,21 +45,27 @@
 
 <script>
 import FavoriteAndSearchComponent from "../components/FavoriteAndSearchComponent.vue";
+import searchAboutComponent from "../components/skeleton/searchSkeletonComponent.vue";
 import { getFavoriteData } from "../apis/favorite-data";
 
 export default {
-  components: { FavoriteAndSearchComponent },
+  components: { FavoriteAndSearchComponent, searchAboutComponent },
   data() {
     return {
+      toLength: 0,
       list: [],
+      skeletonList: [],
+      isSkeleton: true,
     };
   },
   methods: {
     async getData(curId) {
       let { recipe } = await getFavoriteData(curId);
       this.list.push(recipe);
+      // 关闭骨架屏
+      this.isSkeleton = false;
     },
-    getId() {
+    async getId() {
       this.list = [];
       this.localStorageFavoriteList = JSON.parse(
         localStorage.favoriteList || `[]`
@@ -67,6 +79,10 @@ export default {
     gotoSetFavorite() {
       this.$router.push({ name: "setfavorite" });
     },
+    getLength() {
+      this.toLength = JSON.parse(localStorage.favoriteList || `[]`).length;
+      this.skeletonList = JSON.parse(localStorage.favoriteList || `[]`);
+    },
   },
   computed: {
     localStorageFavoriteList: {
@@ -78,10 +94,15 @@ export default {
       },
     },
   },
+  created() {
+    this.getLength();
+  },
   mounted() {
     this.getId();
   },
   beforeRouteUpdate(to, from, next) {
+    this.isSkeleton = true;
+    this.getLength();
     this.getId();
     next();
   },

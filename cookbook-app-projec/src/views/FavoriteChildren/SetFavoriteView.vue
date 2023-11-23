@@ -4,7 +4,17 @@
     <div class="wrapper" ref="wrapper">
       <div class="all-content">
         <van-checkbox-group v-model="result" ref="checkboxGroup">
-          <van-checkbox v-for="e in list" :key="e.cook_id" :name="e.cook_id">
+          <van-checkbox
+            v-for="e in list"
+            :key="e.cook_id"
+            :name="e.cook_id"
+            :label-disabled="true"
+          >
+            <!-- 骨架屏 -->
+            <div class="skeleton" v-show="isSkeleton">
+              <search-about-component v-for="(e, i) in skeletonList" :key="i" />
+            </div>
+
             <favorite-and-search-component
               :cookName="e.title"
               :img="e.photo_path"
@@ -33,13 +43,16 @@
 import FavoriteAndSearchComponent from "../../components/FavoriteAndSearchComponent.vue";
 import { getFavoriteData } from "../../apis/favorite-data";
 import BScroll from "@better-scroll/core";
+import SearchAboutComponent from "../../components/skeleton/searchSkeletonComponent.vue";
 
 export default {
   data() {
     return {
+      skeletonList: [],
       result: [],
       list: [],
       noteBS: null,
+      isSkeleton: true,
     };
   },
   methods: {
@@ -49,6 +62,9 @@ export default {
     async getData(curId) {
       let { recipe } = await getFavoriteData(curId);
       this.list.push(recipe);
+
+      // 关闭骨架屏
+      this.isSkeleton = false;
     },
     getId() {
       this.localStorageFavoriteList = JSON.parse(
@@ -97,7 +113,10 @@ export default {
       this.$nextTick(() => this.initialBScroll());
     },
   },
-  components: { FavoriteAndSearchComponent },
+  components: { FavoriteAndSearchComponent, SearchAboutComponent },
+  created() {
+    this.skeletonList = JSON.parse(localStorage.favoriteList || `[]`);
+  },
   mounted() {
     this.getId();
   },

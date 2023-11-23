@@ -2,6 +2,11 @@
   <div class="show-box">
     <div class="wrapper" ref="wrapper">
       <div class="countent">
+        <!-- 骨架屏 -->
+        <div class="skeleton" v-show="isSkeleton">
+          <search-about-component v-for="e in skeletonList" :key="e" />
+        </div>
+
         <favorite-and-search-component
           v-for="e in cookList"
           :key="e.r.id"
@@ -21,14 +26,17 @@
 import { getSearchResult } from "../../apis/search-data";
 import BScroll from "@better-scroll/core";
 import FavoriteAndSearchComponent from "../../components/FavoriteAndSearchComponent.vue";
+import SearchAboutComponent from "../../components/skeleton/searchSkeletonComponent.vue";
 
 export default {
-  components: { FavoriteAndSearchComponent },
+  components: { FavoriteAndSearchComponent, SearchAboutComponent },
   props: ["kw", "order"],
   data() {
     return {
+      skeletonList: [1, 2, 3, 4, 5, 6, 7],
       cookList: [],
       curBS: null,
+      isSkeleton: true,
     };
   },
   methods: {
@@ -36,6 +44,7 @@ export default {
       this.cookList = [];
       let { list } = await getSearchResult(this.kw, this.order);
       this.cookList = list.filter((e) => e.type == 13);
+      this.isSkeleton = false;
     },
     initialBS() {
       if (!this.curBS) {
@@ -62,6 +71,7 @@ export default {
     this.curBS?.destroy();
   },
   beforeRouteUpdate(to, from, next) {
+    this.isSkeleton = true;
     console.log(to.params);
     this.getCookList();
 

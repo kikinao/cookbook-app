@@ -45,7 +45,7 @@
 <script>
 import CookComponent from "../../components/CookComponent.vue";
 import { getRecommendData } from "../../apis/home-date";
-import HomeAboutComponent from "../../components/skeleton/homeAboutComponent.vue";
+import HomeAboutComponent from "../../components/skeleton/homeSkeletonComponent.vue";
 
 export default {
   data() {
@@ -124,7 +124,7 @@ export default {
   .illusory-swipe {
     width: 100%;
     height: 114px;
-    background-color: rgb(233, 233, 233);
+    background-color: #f5f5f5;
   }
 }
 </style>

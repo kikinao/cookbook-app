@@ -23,7 +23,7 @@
   .Img {
     width: 370px;
     height: 208px;
-    background-color: rgb(233, 233, 233);
+    background-color: #f5f5f5;
   }
 
   .foot {
@@ -42,7 +42,7 @@
     .logo {
       width: 85px;
       height: 25px;
-      background-color: rgb(233, 233, 233);
+      background-color: #f5f5f5;
       border-radius: 0px 10px 0px 10px;
       margin-right: 5px;
 
@@ -55,14 +55,14 @@
     .left-text {
       width: 100px;
       height: 15px;
-      background-color: rgb(233, 233, 233);
+      background-color: #f5f5f5;
     }
   }
 
   .right {
     width: 73px;
     height: 15px;
-    background-color: rgb(233, 233, 233);
+    background-color: #f5f5f5;
   }
 }
 </style>
