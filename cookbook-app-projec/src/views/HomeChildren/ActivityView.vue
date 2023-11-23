@@ -22,32 +22,43 @@
         </van-swipe-item>
       </van-swipe>
     </van-notice-bar>
-    <div class="ongoing-box">
-      <p class="title">热门活动上线中</p>
-      <div class="item-box">
-        <div class="item" v-for="e in ongoingList" :key="e.id">
-          <van-image width="100%" height="100%" :src="e.image" />
-          <div class="acyive-text">
-            <div class="active-name">
-              <span class="active-title">征集申领中</span>
-              <p>{{ e.name }}</p>
+
+    <div class="main">
+      <div class="ongoing-box">
+        <p class="title">热门活动上线中</p>
+        <!-- 骨架屏 -->
+        <div class="skeleton" v-show="isSkeleton">
+          <activity-component />
+          <activity-component />
+          <activity-component />
+        </div>
+
+        <!-- 热门活动板块 -->
+        <div class="item-box">
+          <div class="item" v-for="e in ongoingList" :key="e.id">
+            <van-image width="100%" height="100%" :src="e.image" />
+            <div class="acyive-text">
+              <div class="active-name">
+                <span class="active-title">征集申领中</span>
+                <p>{{ e.name }}</p>
+              </div>
+              <p class="active-add">立即参与 &gt;</p>
             </div>
-            <p class="active-add">立即参与 &gt;</p>
           </div>
         </div>
       </div>
-    </div>
-    <div class="ended-box">
-      <p class="title ended-title">往期回顾</p>
-      <div class="item-box">
-        <div class="item" v-for="e in endedList" :key="e.id">
-          <van-image width="100%" height="100%" :src="e.image" />
-          <div class="acyive-text">
-            <div class="active-name">
-              <span class="active-title ended-active-title">已结束</span>
-              <p>{{ e.name }}</p>
+      <div class="ended-box">
+        <p class="title ended-title">往期回顾</p>
+        <div class="item-box">
+          <div class="item" v-for="e in endedList" :key="e.id">
+            <van-image width="100%" height="100%" :src="e.image" />
+            <div class="acyive-text">
+              <div class="active-name">
+                <span class="active-title ended-active-title">已结束</span>
+                <p>{{ e.name }}</p>
+              </div>
+              <p class="active-add">立即参与 &gt;</p>
             </div>
-            <p class="active-add">立即参与 &gt;</p>
           </div>
         </div>
       </div>
@@ -57,12 +68,15 @@
 
 <script>
 import { getActivityData } from "../../apis/home-date";
+import ActivityComponent from "../../components/skeleton/ActivityComponent.vue";
+
 export default {
   data() {
     return {
       bannerList: [],
       ongoingList: [],
       endedList: [],
+      isSkeleton: true,
     };
   },
   methods: {
@@ -71,11 +85,13 @@ export default {
       this.bannerList = banner;
       this.ongoingList = ongoing.events;
       this.endedList = ended.events;
+      this.isSkeleton = false;
     },
   },
   mounted() {
     this.getData();
   },
+  components: { ActivityComponent },
 };
 </script>
 
@@ -94,6 +110,10 @@ export default {
     top: 50%;
     margin-top: -12px;
   }
+}
+
+.main {
+  padding: 0 10px;
 }
 
 .notice-swipe {

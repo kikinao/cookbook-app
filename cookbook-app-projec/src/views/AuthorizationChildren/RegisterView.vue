@@ -104,7 +104,6 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     if (this.name || this.paw) {
-      console.log(111);
       this.$dialog({
         message: "确认取消注册吗?",
         confirmButtonColor: "#f0c14c",
@@ -117,7 +116,6 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-          next(false);
         });
     } else {
       next();

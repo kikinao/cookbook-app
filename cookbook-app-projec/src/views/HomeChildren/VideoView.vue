@@ -1,5 +1,10 @@
 <template>
   <div class="video-box">
+    <!-- 骨架屏 -->
+    <div class="skeleton" v-show="isSkeleton">
+      <home-about-component />
+      <home-about-component />
+    </div>
     <van-list
       v-model="loading"
       :finished="finished"
@@ -28,6 +33,7 @@
 <script>
 import CookComponent from "../../components/CookComponent.vue";
 import { getVideoData } from "../../apis/home-date";
+import HomeAboutComponent from "../../components/skeleton/homeAboutComponent.vue";
 
 export default {
   data() {
@@ -38,6 +44,7 @@ export default {
       loading: false,
       finished: false,
       refreshing: false,
+      isSkeleton: true,
     };
   },
   methods: {
@@ -45,6 +52,9 @@ export default {
       let { list } = await getVideoData();
       let arr = list.filter((e) => e.type == 1);
       this.cookList = arr;
+
+      // 关闭骨架屏
+      this.isSkeleton = false;
     },
     async getCookList(type) {
       let { list } = await getVideoData(type);
@@ -67,7 +77,7 @@ export default {
   created() {
     this.getFirst();
   },
-  components: { CookComponent },
+  components: { CookComponent, HomeAboutComponent },
 };
 </script>
 

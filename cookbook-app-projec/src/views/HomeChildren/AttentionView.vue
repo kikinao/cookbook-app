@@ -7,6 +7,13 @@
         <p>为你推荐了一些有趣的人,快来关注TA们吧</p>
       </div>
     </div>
+
+    <!-- 骨架屏 -->
+    <div class="skeleton" v-show="isSkeleton">
+      <home-about-component :isAttention="true" />
+      <home-about-component :isAttention="true" />
+    </div>
+
     <div class="recommend-box">
       <van-list
         v-model="loading"
@@ -36,15 +43,17 @@
 <script>
 import { getAttentionData } from "../../apis/home-date";
 import CookComponent from "../../components/CookComponent.vue";
+import HomeAboutComponent from "../../components/skeleton/homeAboutComponent.vue";
 
 export default {
-  components: { CookComponent },
+  components: { CookComponent, HomeAboutComponent },
   data() {
     return {
       atList: [],
       curType: 1,
       loading: false,
       finished: false,
+      isSkeleton: true,
     };
   },
   methods: {
@@ -52,6 +61,9 @@ export default {
       let { rfs } = await getAttentionData();
       this.atList = rfs;
       // console.log(this.atList);
+
+      // 修改骨架屏
+      this.isSkeleton = false;
     },
     async getData(type) {
       let { rfs } = await getAttentionData(type);

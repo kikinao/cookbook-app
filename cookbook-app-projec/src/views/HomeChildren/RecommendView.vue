@@ -1,10 +1,22 @@
 <template>
   <div class="recommend-box">
+    <!-- 轮播图骨架屏 -->
+    <div class="swipe-skeleton" v-show="isSwipeSkeleton">
+      <div class="illusory-swipe"></div>
+    </div>
+
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
       <van-swipe-item v-for="e in bannerList" :key="e.t" :data-id="e.id">
         <van-image width="100%" height="100%" :src="e.i" />
       </van-swipe-item>
     </van-swipe>
+
+    <!-- 骨架屏 -->
+    <div class="body-skeleton" v-show="isSkeleton">
+      <home-about-component />
+      <home-about-component />
+    </div>
+
     <van-list
       v-model="loading"
       :finished="finished"
@@ -13,7 +25,6 @@
       :offset="50"
       :immediate-check="false"
     >
-      <!-- class="myContent" -->
       <cook-component
         v-for="e in cookList"
         :key="e.r.id"
@@ -34,6 +45,7 @@
 <script>
 import CookComponent from "../../components/CookComponent.vue";
 import { getRecommendData } from "../../apis/home-date";
+import HomeAboutComponent from "../../components/skeleton/homeAboutComponent.vue";
 
 export default {
   data() {
@@ -44,6 +56,8 @@ export default {
       curType: 1,
       loading: false,
       finished: false,
+      isSwipeSkeleton: true,
+      isSkeleton: true,
     };
   },
   methods: {
@@ -52,6 +66,9 @@ export default {
       let arr = await list.filter((e) => e.type == 1);
       // console.log(arr);
       this.cookList = arr;
+
+      // 关闭骨架屏
+      this.isSkeleton = false;
     },
     async getCookList(type) {
       let { list } = await getRecommendData(type);
@@ -64,6 +81,9 @@ export default {
     async getBannerList() {
       let data = await getRecommendData();
       this.bannerList = data.banner;
+
+      // 关闭骨架屏
+      this.isSwipeSkeleton = false;
     },
     onload() {
       // console.log("开始刷新请求", `curType:${this.curType}`);
@@ -75,7 +95,10 @@ export default {
       }
     },
   },
-  components: { CookComponent },
+  components: {
+    HomeAboutComponent,
+    CookComponent,
+  },
   mounted() {
     this.getBannerList();
     // this.getCookList();
@@ -93,5 +116,15 @@ export default {
 
 .myContent {
   min-height: calc(100vh - 54px - 50px - 55px);
+}
+
+.swipe-skeleton {
+  margin-top: 104px;
+
+  .illusory-swipe {
+    width: 100%;
+    height: 114px;
+    background-color: rgb(233, 233, 233);
+  }
 }
 </style>
