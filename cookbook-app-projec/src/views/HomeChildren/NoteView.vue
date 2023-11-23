@@ -161,7 +161,7 @@ export default {
 .skeleton-body {
   width: 100vw;
   margin-top: 10px;
-  padding: 0 10px;
+  padding: 0 15px;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
@@ -242,6 +242,10 @@ export default {
       background-color: #f5f5f5;
       border-radius: 999px;
       margin-left: 10px;
+
+      &:first-child {
+        margin-left: 5px;
+      }
     }
   }
 
@@ -257,7 +261,7 @@ export default {
   position: relative;
 
   .active-content {
-    width: 227%;
+    width: 230%;
   }
 }
 
@@ -269,12 +273,16 @@ export default {
 .theActives {
   span {
     display: inline-block;
-    margin-left: 10px;
+    margin-right: 10px;
     font-size: 12px;
     color: #50969f;
     background-color: #f3f9fa;
     border-radius: 999px;
     padding: 10px;
+
+    &:first-child {
+      margin-left: 5px;
+    }
   }
 }
 
