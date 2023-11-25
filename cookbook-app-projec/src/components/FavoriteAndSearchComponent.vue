@@ -1,7 +1,13 @@
 <template>
   <div>
     <div class="item" :data-id="id">
-      <van-image class="myImg" width="135" height="90" :src="img" radius="5" />
+      <van-image
+        :style="{ 'aspect-ratio': 1.5 }"
+        class="myImg"
+        height="95"
+        :src="img"
+        radius="5"
+      />
       <div class="item-about" @click="gotoCookDetails(id)">
         <p class="cook-name">{{ cookName }}</p>
         <p class="details">

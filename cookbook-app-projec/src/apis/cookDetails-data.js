@@ -5,3 +5,9 @@ export const getCookDetailsData = async (curId) => {
 
     return data.result;
 }
+
+export const getFlatcomments = async (curId) => {
+    let { data } = await axios.get(`https://apic.netstart.cn/douguo/recipe/flatcomments/${curId}/0/20`)
+
+    return data.result;
+}

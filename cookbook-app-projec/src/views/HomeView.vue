@@ -51,7 +51,7 @@ export default {
   left: 0px;
   right: 0px;
 
-  z-index: 999;
+  z-index: 340;
 }
 
 .view-show {

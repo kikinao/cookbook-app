@@ -1,4 +1,4 @@
-import { Icon, Search, Tab, Tabs, Swipe, SwipeItem, Image as VanImage, NavBar, NoticeBar, Checkbox, CheckboxGroup, List, PullRefresh, Calendar, Uploader, Button, Sticky, Dialog } from 'vant';
+import { Icon, Search, Tab, Tabs, Swipe, SwipeItem, Image as VanImage, NavBar, NoticeBar, Checkbox, CheckboxGroup, List, PullRefresh, Calendar, Uploader, Button, Sticky, Dialog, Loading } from 'vant';
 
 export default {
     install(Vue) {
@@ -19,6 +19,7 @@ export default {
         Vue.use(Uploader);
         Vue.use(Button);
         Vue.use(Sticky);
-        Vue.use(Dialog)
+        Vue.use(Dialog);
+        Vue.use(Loading);
     }
 }

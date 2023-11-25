@@ -54,7 +54,7 @@
       <div class="ad-about">
         <div>
           <van-icon name="photograph" />
-          <p>每天打卡 +200经验</p>
+          <p>首次打卡 +200经验</p>
         </div>
       </div>
       <div class="pic-box">
