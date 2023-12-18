@@ -46,6 +46,7 @@
 import CookComponent from "../../components/CookComponent.vue";
 import { getRecommendData } from "../../apis/home-date";
 import HomeAboutComponent from "../../components/skeleton/homeSkeletonComponent.vue";
+import axios from "axios";
 
 export default {
   data() {

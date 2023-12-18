@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <div class="title">
-      <h2>豆果美食</h2>
+      <h2>一碟美食</h2>
       <h2>会做饭很酷~</h2>
     </div>
     <div class="content">
